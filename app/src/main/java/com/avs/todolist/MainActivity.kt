@@ -1,5 +1,6 @@
 package com.avs.todolist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         ) { toDos ->
             toDos?.let { updateUI(toDos) }
         }
+        findViewById<FloatingActionButton>(R.id.add_task_button)
+            .setOnClickListener{
+                startActivity(Intent(this, AddTaskActivity::class.java))
+        }
     }
 
     private fun updateUI(toDos : List<ToDoTask>){
@@ -35,23 +41,15 @@ class MainActivity : AppCompatActivity() {
         toDoRecyclerView.adapter = adapter
     }
 
-    private inner class ToDoHolder(view : View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    private inner class ToDoHolder(view : View) : RecyclerView.ViewHolder(view) {
         private lateinit var toDo : ToDoTask
         private val titleViewText : TextView = itemView.findViewById(R.id.to_do_title)
         private val importanceTextView : TextView = itemView.findViewById(R.id.to_do_importance)
-
-        init {
-            itemView.setOnClickListener(this)
-        }
 
         fun bind(todo : ToDoTask){
             this.toDo = todo
             titleViewText.text = toDo.title
             importanceTextView.text = toDo.importance.toString()
-        }
-
-        override fun onClick(p0: View?) {
-            //TODO: Implement deletion
         }
     }
 
