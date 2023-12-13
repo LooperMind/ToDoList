@@ -1,6 +1,7 @@
 package com.avs.todolist
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import database.ToDoDatabase
 import java.util.UUID
@@ -14,11 +15,11 @@ class ToDoRepository private constructor(context : Context) {
             DATABSAE_NAME
         ).build()
 
-    private val dataBaseDao = database.toDODao()
+    private val dataBaseDao = database.toDoDao()
 
-    fun getToDos() : List<ToDoTask> = dataBaseDao.getToDos()
+    fun getToDos() : LiveData<List<ToDoTask>> = dataBaseDao.getToDos()
 
-    fun getToDO(id : UUID) : ToDoTask? = dataBaseDao.getToDo(id)
+    fun getToDo(id : UUID) : LiveData<ToDoTask?> = dataBaseDao.getToDo(id)
 
     companion object {
         private var INSTANCE: ToDoRepository? = null
