@@ -21,6 +21,10 @@ class ToDoRepository private constructor(context : Context) {
 
     fun getToDo(id : UUID) : LiveData<ToDoTask?> = dataBaseDao.getToDo(id)
 
+    fun createToDo(toDoTask: ToDoTask){
+        dataBaseDao.InsertToDo(toDoTask)
+    }
+
     companion object {
         private var INSTANCE: ToDoRepository? = null
         fun initialize(context : Context){
